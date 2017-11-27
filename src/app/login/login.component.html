@@ -1,0 +1,14 @@
+
+  <div class="bg" style="height: 700px;">
+    <form class="form-inline" (submit)="Authenticate(inputId.value)">
+      <div class="form-group mx-sm-3"style="margin-top: 23%">
+        <input type="text" class="form-control" style="width: 280px" #inputId placeholder="EmailId">
+      </div>
+      <div class="form-group" style="margin-top: 23%">
+        <small *ngIf="check" class="form-text " style="color: white; margin-bottom: 2px;margin-right: 10px">Invalid Credentials</small>
+        <button type="submit"class="btn btn-success" >Confirm identity</button>
+      </div>
+
+    </form>
+  </div>
+

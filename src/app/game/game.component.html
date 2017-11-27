@@ -1,0 +1,137 @@
+<div *ngIf="check" style="height: 40px " >
+  <div  class="form-inline" style=" width: 35%; float: right; margin-top: -70px">
+    <div class="card" style="height: 60px; width: 50%; margin-left: 25%; ">
+      <div class="card-body"  >
+        <div style="margin-top: -10px;font-size: 13px" >
+          Welcome {{currentUser.Customer_Name}}
+          <br>
+          You have Rs <span></span>{{currentUser.Account_Balance}}
+        </div>
+      </div>
+    </div>
+    <button type="button" style="margin-left: 5%; width: 15%; height: 25px; font-size: 13px ; margin-top: -10px " (click)="LogOut()">Exit</button>
+  </div>
+</div>
+
+<div style=" margin-left: 28%;">
+  <img src="http://www.roulette.co.uk/wp-content/uploads/european-roulette.jpeg"/>
+</div>
+
+<form style="margin: 10%;width: 80%; border: groove; margin-top: 4%; margin-bottom: 0">
+  <div style="margin: 2%" >
+    <div>
+      <div class="row">
+        <div class="col ">
+          <label >1st12</label>
+          <input style="float: right; margin-right: 35%; width: 25%" type="number" placeholder=0 #one (change)="Betting('one', one.value)" step="500" min="0" >
+        </div>
+        <div class="col">
+          <label>2nd12</label>
+          <input style="float: right;margin-right: 35%; width: 25%" type="number"  #two placeholder=0 (change)="Betting('two', two.value)" step="500" min="0">
+        </div>
+        <div class="col">
+          <label>3rd12</label>
+          <input style="float: right;margin-right: 35%; width: 25%" type="number" placeholder=0 #three (change)="Betting('three', three.value)"  step="500"min="0">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div>
+      <div class="row">
+        <div class="col ">
+          <label >0</label>
+          <input style="float: right; margin-right: 35%; width: 25%" placeholder=0 #four (change)="Betting('four', four.value)" type="number" name="points" step="500" min="0">
+        </div>
+        <div class="col">
+          <label>1 to 18</label>
+          <input style="float: right;margin-right: 35%; width: 25%" placeholder=0 #five (change)="Betting('five', five.value)" type="number" name="points" step="500" min="0">
+        </div>
+        <div class="col">
+          <label>19 to 36</label>
+          <input style="float: right;margin-right: 35%; width: 25%" placeholder=0 #six (change)="Betting('six', six.value)" type="number" name="points" step="500" min="0">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div>
+      <div class="row">
+        <div class="col ">
+          <label >Even</label>
+          <input style="float: right; margin-right: 35%; width: 25%" placeholder=0 #seven (change)="Betting('seven', seven.value)"type="number" name="points" step="500" min="0">
+        </div>
+        <div class="col">
+          <label>Odd</label>
+          <input style="float: right;margin-right: 35%; width: 25%" type="number" #eight (change)="Betting('eight', eight.value)" placeholder=0 name="points" step="500" min="0">
+        </div>
+        <div class="col">
+          <button  style="width: 50%; margin-left: 10%;" type="button"
+                   class="btn  btn-success " data-toggle="modal" data-target="#exampleModal" (click)="Confirm()">Play</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!--Launch demo modal 1-->
+<!-- Modal -->
+<div *ngIf="visibleModal" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="margin-left: 35%">Try Your Luck</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngIf="valid" class="modal-body" style="margin-top: 5%; margin-bottom: 5%">
+        Are you sure you want to try your luck with current selection
+      </div>
+      <div *ngIf="valid === false" class="modal-body" style="margin-top: 5%; margin-bottom: 5%">
+        Make a bet greater than 0 in multiples of 500 for fortune!!!
+      </div>
+      <div  class="modal-footer">
+        <button *ngIf="valid === false" type="button" style="width: 20%" class="btn btn-primary" data-dismiss="modal">Got it</button>
+        <button *ngIf="valid" type="button" style="width: 20%" class="btn btn-secondary" data-dismiss="modal">No :(</button>
+        <button *ngIf="valid" type="button" data-toggle="modal" data-target="#secondModal" style="width: 30%" class="btn btn-primary" (click)="BlockAmount()">Definitely!! :) </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  class="modal fade" id="secondModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 *ngIf="success" class="modal-title" style="margin-left: 35%">
+          <div *ngIf="resultFactor > 0">
+            You Won!!!
+          </div>
+          <div *ngIf="resultFactor === 0">
+            You Lose
+          </div>
+        </h5>
+        <h5 *ngIf="success === false" class="modal-title" style="margin-left: 35%">Error</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngIf="success" class="modal-body" style="margin-top: 5%; margin-bottom: 5%">
+        The Roulette Result is Number {{randomNumber}} <br>
+        <div *ngIf="resultFactor > 0">
+          You Won Rs <span></span> {{winningAmount}}
+        </div>
+        <div *ngIf="resultFactor === 0">
+          Hard Luck you lose :(
+        </div>
+      </div>
+      <div *ngIf="success === false" class="modal-body" style="margin-top: 5%; margin-bottom: 5%">
+        Sorry Dear!! <br> You have insufficient balance for your Selections...
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="success === false" type="button" style="width: 20%" class="btn btn-secondary" data-dismiss="modal">Close :(</button>
+        <button *ngIf="success === false" type="button" style="width: 30%" class="btn btn-primary" (click)="ResetGame()">Reset Game </button>
+        <button *ngIf="success" type="button" style="width: 20%" class="btn btn-secondary" data-dismiss="modal" (click)="LogOut()">Exit :(</button>
+        <button *ngIf="success" type="button" style="width: 30%" class="btn btn-primary" (click)="PlayAgain()">Play Again!!  :) </button>
+      </div>
+    </div>
+  </div>
+</div>
